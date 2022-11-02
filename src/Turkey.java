@@ -1,7 +1,7 @@
-public class Cow extends Animal {
+public class Turkey extends Animal {
 
-    public Cow(String audioFilePath, String imageFilePath) {
-        super("Cow", audioFilePath, imageFilePath);
+    public Turkey(String audioFilePath, String imageFilePath) {
+        super("Turkey", audioFilePath, imageFilePath);
     }
 
     @Override

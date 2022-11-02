@@ -7,8 +7,10 @@ public class SeeAndSay extends JFrame {
 
     private final int FRAME_WIDTH = 1120;
     private final int FRAME_HEIGHT = 770;
+    private final int SPINNER_WIDTH = 600;
+    private final int SPINNER_HEIGHT = 600;
     private GameSpinnerSelection spinner = null;
-    private List<String> wedges = null;
+    private List<WedgeInfo> wedges = null;
 
     private GridBagConstraints gridBagConstraints;
 
@@ -42,9 +44,9 @@ public class SeeAndSay extends JFrame {
 
 
         spinPanel = new JPanel();
-        spinPanel.setPreferredSize(new Dimension(450, 450));
-        spinPanel.setMaximumSize(new Dimension(450, 450));
-        spinPanel.setMaximumSize(new Dimension(450, 450));
+        spinPanel.setPreferredSize(new Dimension((int)(SPINNER_WIDTH * 1.1), (int)(SPINNER_HEIGHT * 1.1)));
+        spinPanel.setMaximumSize(new Dimension((int)(SPINNER_WIDTH * 1.1), (int)(SPINNER_HEIGHT * 1.1)));
+        spinPanel.setMaximumSize(new Dimension((int)(SPINNER_WIDTH * 1.1), (int)(SPINNER_HEIGHT * 1.1)));
         spinPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         spinPanel.setLayout(null);
         spinPanel.add(spinner);
@@ -61,27 +63,23 @@ public class SeeAndSay extends JFrame {
     }
 
     private void buildSpinner() throws Exception {
-        String item = "Dog " + "\uD83D\uDC36";
-        System.out.println(item);
-        wedges.add(item);
-        item = "Cow " + new String(Character.toChars(0x1F42E));
-        wedges.add(item);
-        item = "Pig " + new String(Character.toChars(0x1F437));
-        wedges.add(item);
-        item = "Horse " + new String(Character.toChars(0x1F434));
-        wedges.add(item);
+        /*
+
         item = "Sheep " + new String(Character.toChars(0x1F411));
         wedges.add(item);
-        item = "Cat " + new String(Character.toChars(0x1F63A));
-        wedges.add(item);
+
         item = "Rooster " + new String(Character.toChars(0x1F413));
         wedges.add(item);
-        item = "Goat " + new String(Character.toChars(0x1F410));
-        wedges.add(item);
-
+        turkey
+        */
+        wedges.add(new Cow("sounds/cow.mp3", "images/cow.png" ));
+        wedges.add(new Cat("sounds/cat.mp3", "images/cat.png"));
+        wedges.add(new Dog("sounds/dog.mp3", "images/dog.png"));
+        wedges.add(new Horse("sounds/horse.mp3", "images/horse.png"));
+        wedges.add(new Pig("sounds/pig.mp3", "images/pig.png"));
         spinner = new GameSpinnerSelection(wedges);
         spinner.hasBorders(true);
-        spinner.setBounds(10, 10, 400, 400);
+        spinner.setBounds(10, 10, SPINNER_WIDTH, SPINNER_HEIGHT);
         spinner.setFont(new Font("TimesRoman", Font.PLAIN, 12));
 
     }
@@ -124,7 +122,7 @@ public class SeeAndSay extends JFrame {
 
     public static void main(String[] args) {
         SeeAndSay sas = new SeeAndSay();
-        //Animal animal = new Cow();
+        Animal animal = new Cow("Moo.wav", "images/cow.jpg");
         //animal.makeSound();
     }
 }

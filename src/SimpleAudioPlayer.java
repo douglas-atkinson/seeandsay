@@ -42,7 +42,7 @@ public class SimpleAudioPlayer {
         // open audioInputStream to the clip
         clip.open(audioInputStream);
 
-        clip.loop(0);
+        //clip.loop(0);
     }
 
     // Method to play the audio

@@ -1,8 +1,8 @@
-public class Cow extends Animal {
-
-    public Cow(String audioFilePath, String imageFilePath) {
-        super("Cow", audioFilePath, imageFilePath);
+public class Sheep extends Animal {
+    public Sheep(String audioFilePath, String imageFilePath) {
+        super("Sheep", audioFilePath, imageFilePath);
     }
+
 
     @Override
     public void makeSound() {

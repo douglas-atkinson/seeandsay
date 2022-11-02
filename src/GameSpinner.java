@@ -34,10 +34,12 @@ public class GameSpinner extends JPanel {
     private int _radius;
     private Point2D _center = new Point2D.Double();
 
-    List<String> _stringList;
+    //List<String> _stringList;
+    // Change this from List<String> to List<WedgeInfo>
+    List<WedgeInfo> _wedgeInfoList;
     private int _noElem;
     private final int LIMIT = 100;
-    private final int MAXFONTSIZE = 80, MINFONTSIZE = 10;
+    private final int MAXFONTSIZE = 45, MINFONTSIZE = 10;
     private final Font DEFAULTFONT = new Font("TimesRoman", Font.PLAIN, 12);
     private Font _font = DEFAULTFONT;
 
@@ -51,8 +53,9 @@ public class GameSpinner extends JPanel {
     private int _refreshRate = 100;
     private Point2D _mouseDragPosition;
 
-    public GameSpinner(List<String> listOfStrings) throws Exception {
-        setListOfStrings(listOfStrings);
+    public GameSpinner(List<WedgeInfo> listOfWedges) throws Exception {
+        //setListOfStrings(listOfStrings);
+        setListOfWedges(listOfWedges);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -199,14 +202,14 @@ public class GameSpinner extends JPanel {
         return _radius;
     }
 
-    public List<String> getListOfStrings() {
+    public List<WedgeInfo> getListOfWedges() {
         /*
          * Get list of strings displayed inside the sections of the wheel
          */
-        return _stringList;
+        return _wedgeInfoList;
     }
 
-    public void setListOfStrings(List<String> list) throws Exception {
+    public void setListOfWedges(List<WedgeInfo> list) throws Exception {
         /*
          * Set list of strings displayed inside the sections of the wheel
          * Teh initial list is set in constructor method and can be changed during runtime
@@ -216,7 +219,7 @@ public class GameSpinner extends JPanel {
             throw new Exception("String list is larger than limit (" + LIMIT + ")");
         }
         _delta = (double)360 / (double)_noElem;
-        _stringList = list;
+        _wedgeInfoList = list;
         _image = null;
         _spinOnOff = false;
         setRotationAngle(0);
@@ -286,7 +289,7 @@ public class GameSpinner extends JPanel {
         return _spinOnOff;
     }
 
-    public String getSelectedString() {
+    public WedgeInfo getSelectedWedge() {
         /*
          * Get current selection.
          * Returns the string which is displayed in the section of the wheel that is currently positioned between 0 and delta degrees
@@ -294,7 +297,7 @@ public class GameSpinner extends JPanel {
          * This number is added to the size of the string arraylist, and then MODed by the size of the string arraylist
          * in order to avoid negative indices
          */
-        return _stringList.get((int)Math.floor(_noElem + (_rotationAngle % 360) / _delta) % _noElem);
+        return _wedgeInfoList.get((int)Math.floor(_noElem + (_rotationAngle % 360) / _delta) % _noElem);
     }
 
     @Override
@@ -354,7 +357,8 @@ public class GameSpinner extends JPanel {
         // Calculate radius
         _radius = Math.min(img.getWidth(), img.getHeight()) / 2 - BORDER;
 
-        double stringDistanceFromEdge = 0.05 * _radius;
+        double distanceFromEdgeFactor = 0.20;   // originally 0.05
+        double stringDistanceFromEdge = distanceFromEdgeFactor * _radius;
         int fontSize, stringWidth, maxStringWidth;
 
         maxStringWidth = (int)(_radius - 2 * stringDistanceFromEdge);
@@ -418,16 +422,45 @@ public class GameSpinner extends JPanel {
             g2d.rotate(Math.toRadians(_delta / 2), _center.getX(), _center.getY());
             g2d.setColor(Color.BLACK);
             fontMetrics = g2d.getFontMetrics();
-            stringWidth = fontMetrics.stringWidth(_stringList.get(i));
+            stringWidth = fontMetrics.stringWidth(_wedgeInfoList.get(i).getString());
             g2d.drawString(
-                    _stringList.get(i),
+                    _wedgeInfoList.get(i).getString(),
                     (int)(_center.getX() + maxStringWidth - stringWidth + stringDistanceFromEdge),
                     (int)(_center.getY() + (double)fontMetrics.getHeight() / 2 - fontMetrics.getMaxDescent())
             );
+            Image image = _wedgeInfoList.get(i).getImage();
+            int imageWidth = image.getWidth(null);
+            int imageHeight = image.getHeight(null);
+            double ratio = 0.0;
+            if (imageWidth > imageHeight) {
+                ratio = (double)imageHeight / imageWidth;
+                imageWidth = fontSize;
+                imageHeight = (int)(fontSize * ratio);
+            }
+            else {
+                ratio = (double)imageWidth / imageHeight;
+                imageHeight = fontSize;
+                imageWidth = (int)(fontSize * ratio);
+            }
+            image = resizeImage((BufferedImage)image, imageWidth, imageHeight, BufferedImage.SCALE_SMOOTH);
+            g2d.drawImage(image,
+                    (int)(_center.getX() + _radius - stringDistanceFromEdge ),
+                    (int)(_center.getY() - fontMetrics.getMaxDescent()), null);
             g2d.rotate(Math.toRadians(_delta / 2), _center.getX(), _center.getY());
+
+        }
+        System.out.println(fontSize);
+        return img;
+    }
+
+    private Image resizeImage(BufferedImage bi, int width, int height, int scalingAlgorithm) {
+        Image image = null;
+
+        if (bi != null) {
+            image = bi.getScaledInstance(width, height, scalingAlgorithm);
         }
 
-        return img;
+        return image;
     }
 
     private int calcFontSize(Graphics g, double stringDistanceFromEdge, int maxStringWidth) {
@@ -441,8 +474,8 @@ public class GameSpinner extends JPanel {
         // Find the longest string
         String tmpString = "";
         for (int i = _noElem - 1; i >= 0; --i) {
-            if (_stringList.get(i).length() > tmpString.length()) {
-                tmpString = _stringList.get(i);
+            if (_wedgeInfoList.get(i).getString().length() > tmpString.length()) {
+                tmpString = _wedgeInfoList.get(i).getString();
             }
         }
 

@@ -32,8 +32,8 @@ public class MainWheel {
 		list.add("Spider-Man");
 		list.add("Shrek the Third");
 		
-		//SelectionWheel wheel = new SelectionWheel(list);
-		GameSpinnerSelection wheel = new GameSpinnerSelection(list);
+		SelectionWheel wheel = new SelectionWheel(list);
+		//GameSpinnerSelection wheel = new GameSpinnerSelection(list);
 		wheel.hasBorders(true);
 		wheel.setBounds(10, 10, 700, 700);
 		System.out.println("Main wheel radius: " + wheel.getRadius());

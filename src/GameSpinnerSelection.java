@@ -7,8 +7,8 @@ public class GameSpinnerSelection extends JPanel {
     GameSpinner _spinner;
     GameSpinnerTick _tick;
 
-    public GameSpinnerSelection(List<String> listOfStrings) throws Exception {
-        _spinner = new GameSpinner(listOfStrings);
+    public GameSpinnerSelection(List<WedgeInfo> listOfWedges) throws Exception {
+        _spinner = new GameSpinner(listOfWedges);
         _spinner.setLayout(null);
         _tick = new GameSpinnerTick();
         _tick.setLayout(null);
@@ -49,12 +49,12 @@ public class GameSpinnerSelection extends JPanel {
         _spinner.setFont(font);
     }
 
-    public List<String> getListOfStrings() {
-        return _spinner.getListOfStrings();
+    public List<WedgeInfo> getListOfStrings() {
+        return _spinner.getListOfWedges();
     }
 
-    public void setListOfStrings(List<String> list) throws Exception {
-        _spinner.setListOfStrings(list);
+    public void setListOfStrings(List<WedgeInfo> list) throws Exception {
+        _spinner.setListOfWedges(list);
     }
 
     public double getSpinSpeed() {
@@ -89,8 +89,8 @@ public class GameSpinnerSelection extends JPanel {
         _spinner.addColor(color);
     }
 
-    public String getSelectedString() {
-        return _spinner.getSelectedString();
+    public WedgeInfo getSelectedString() {
+        return _spinner.getSelectedWedge();
     }
 
     public boolean isSpinning() {
