@@ -13,4 +13,14 @@ public class Turkey extends Animal {
     public String getString() {
         return getName();
     }
+
+    @Override
+    public String getActionString() {
+        return "gobble";
+    }
+
+    @Override
+    public void playAudio() {
+        makeSound();
+    }
 }

@@ -89,7 +89,7 @@ public class GameSpinnerSelection extends JPanel {
         _spinner.addColor(color);
     }
 
-    public WedgeInfo getSelectedString() {
+    public WedgeInfo getSelectedWedge() {
         return _spinner.getSelectedWedge();
     }
 

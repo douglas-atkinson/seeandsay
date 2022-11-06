@@ -12,4 +12,14 @@ public class Horse extends Animal {
     public String getString() {
         return getName();
     }
+
+    @Override
+    public String getActionString() {
+        return "neigh";
+    }
+
+    @Override
+    public void playAudio() {
+        makeSound();
+    }
 }

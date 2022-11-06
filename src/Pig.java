@@ -12,4 +12,14 @@ public class Pig extends Animal {
     public String getString() {
         return getName();
     }
+
+    @Override
+    public String getActionString() {
+        return "oink";
+    }
+
+    @Override
+    public void playAudio() {
+        makeSound();
+    }
 }

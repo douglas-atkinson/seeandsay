@@ -12,4 +12,14 @@ public class Cat extends Animal{
     public String getString() {
         return getName();
     }
+
+    @Override
+    public String getActionString() {
+        return "meow";
+    }
+
+    @Override
+    public void playAudio() {
+        makeSound();
+    }
 }

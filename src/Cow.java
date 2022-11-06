@@ -13,4 +13,14 @@ public class Cow extends Animal {
     public String getString() {
         return getName();
     }
+
+    @Override
+    public String getActionString() {
+        return "moo";
+    }
+
+    @Override
+    public void playAudio() {
+        makeSound();
+    }
 }

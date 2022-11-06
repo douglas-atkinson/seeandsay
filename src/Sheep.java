@@ -13,4 +13,14 @@ public class Sheep extends Animal {
     public String getString() {
         return getName();
     }
+
+    @Override
+    public String getActionString() {
+        return "baa";
+    }
+
+    @Override
+    public void playAudio() {
+        makeSound();
+    }
 }

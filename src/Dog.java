@@ -12,4 +12,14 @@ public class Dog extends Animal {
     public String getString() {
         return getName();
     }
+
+    @Override
+    public String getActionString() {
+        return "woof";
+    }
+
+    @Override
+    public void playAudio() {
+        makeSound();
+    }
 }

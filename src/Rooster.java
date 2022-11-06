@@ -14,4 +14,14 @@ public class Rooster extends Animal {
     public String getString() {
         return getName();
     }
+
+    @Override
+    public String getActionString() {
+        return "crow";
+    }
+
+    @Override
+    public void playAudio() {
+        makeSound();
+    }
 }
